@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><h1>HTML Basics — Code Playground</h1></title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #0f1117;
+      --surface:  #13151f;
+      --panel:    #1a1e2e;
+      --border:   #252a3a;
+      --accent:   #5dffc0;
+      --accent2:  #ac9cf8;
+      --accent3:  #fb923c;
+      --text:     #e8eaf0;
+      --muted:    #6b7a9e;
+      --tag:      #5dffc0;
+      --keyword:  #a78bfa;
+      --string:   #fb923c;
+      --comment:  #4b5563;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    /* ── Navbar ── */
+    .navbar-custom {
+      background: var(--surface) !important;
+      border-bottom: 1px solid var(--border);
+      min-height: 56px;
+    }
+    .navbar-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      color: var(--text) !important;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -.3px;
+    }
+    .logo-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      display: inline-block;
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .45; transform: scale(.65); }
+    }
+    .breadcrumb-custom {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .breadcrumb-custom .active { color: var(--accent); }
+    .badge-version {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: rgba(93,255,192,.1) !important;
+      color: var(--accent) !important;
+      border: 1px solid rgba(93,255,192,.25);
+      border-radius: 20px;
+      padding: 4px 12px;
+    }
+    .navbar-toggler {
+      border-color: var(--border) !important;
+    }
+    .navbar-toggler-icon {
+      filter: invert(1);
+    }
+    /* ── Hero / intro strip ── */
+    .hero-strip {
+      background: linear-gradient(135deg, rgba(93,255,192,.04) 0%, rgba(167,139,250,.06) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0 16px;
+    }
+    .hero-strip h1 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #fff 40%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+    .hero-strip p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+    .lesson-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(93,255,192,.08);
+      border: 1px solid rgba(93,255,192,.2);
+      border-radius: 4px;
+      padding: 3px 9px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    /* ── Progress bar strip ── */
+    .progress-strip {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+    }
+    .progress-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .progress-custom {
+      background: var(--panel);
+      border-radius: 20px;
+      height: 6px;
+    }
+    .progress-bar-custom {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 20px;
+      height: 100%;
+      width: 25%;
+      transition: width .5s ease;
+    }
+    /* ── Info cards ── */
+    .info-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color .2s, transform .2s;
+      height: 100%;
+    }
+    .info-card:hover {
+      border-color: rgba(93,255,192,.3);
+      transform: translateY(-2px);
+    }
+    .info-card .card-body { padding: 20px; }
+    .info-card .card-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    .icon-green  { background: rgba(93,255,192,.12); color: var(--accent); }
+    .icon-purple { background: rgba(167,139,250,.12); color: var(--accent2); }
+    .icon-orange { background: rgba(251,146,60,.12);  color: var(--accent3); }
+    .info-card .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .info-card .card-text {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+    /* ── Main content area ── */
+    .main-wrap {
+      background: var(--bg);
+    }
+    /* ── Tutorial panel ── */
+    .tutorial-col {
+      border-right: 1px solid var(--border);
+    }
+    @media (max-width: 991px) {
+      .tutorial-col { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+    .tutorial-inner {
+      padding: 28px 24px;
+      max-height: calc(100vh - 220px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    @media (max-width: 991px) {
+      .tutorial-inner { max-height: none; }
+    }
+    .tutorial-inner::-webkit-scrollbar { width: 4px; }
+    .tutorial-inner::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    /* Section header */
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(93,255,192,.08);
+      border: 1px solid rgba(93,255,192,.2);
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0;
+    }
+    .section-body {
+      font-size: 13.5px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+    /* Inline code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: rgba(167,139,250,.12);
+      color: var(--accent2);
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(167,139,250,.18);
+    }
+    /* Code block */
+    .code-block {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .code-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,.02);
+    }
+    .code-block-lang {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .mac-dots { display: flex; gap: 5px; }
+    .mac-dot  { width: 8px; height: 8px; border-radius: 50%; }
+    pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.7;
+      padding: 14px 16px;
+      margin: 0;
+      overflow-x: auto;
+      color: var(--text);
+    }
+    pre .tag     { color: var(--tag); }
+    pre .attr    { color: var(--accent2); }
+    pre .string  { color: var(--string); }
+    pre .comment { color: var(--comment); }
+    /* Tip callout */
+    .tip-callout {
+      background: rgba(93,255,192,.05);
+      border: 1px solid rgba(93,255,192,.15);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .tip-callout p {
+      font-size: 13px;
+      color: #a7f3d0;
+      margin-bottom: 0;
+      line-height: 1.65;
+    }
+    /* ── Playground panel ── */
+    .playground-col { padding: 0; }
+    .playground-inner {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 220px);
+    }
+    @media (max-width: 991px) {
+      .playground-inner { height: 700px; }
+    }
+    .panel-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .panel-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+    }
+    .dot-orange { background: var(--accent3); }
+    .dot-green  { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+    .run-btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0d0e14 !important;
+      background: var(--accent) !important;
+      border: none !important;
+      border-radius: 7px;
+      padding: 6px 18px;
+      box-shadow: 0 0 18px rgba(93,255,192,.25);
+      transition: transform .15s, box-shadow .15s, filter .15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .run-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 22px rgba(93,255,192,.4);
+    }
+    .run-btn:active { transform: translateY(0); }
+    /* Editor */
+    .editor-wrap {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+    .line-numbers {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 40px;
+      background: rgba(0,0,0,.2);
+      border-right: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--comment);
+      padding: 16px 10px 16px 0;
+      text-align: right;
+      pointer-events: none;
+      overflow: hidden;
+      user-select: none;
+    }
+    #code-editor {
+      width: 100%;
+      height: 100%;
+      resize: none;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text);
+      padding: 16px 16px 16px 56px;
+      caret-color: var(--accent);
+      tab-size: 2;
+    }
+    #code-editor::selection { background: rgba(93,255,192,.15); }
+    /* Output */
+    .output-wrap {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    #output {
+      width: 100%; height: 100%;
+      border: none;
+      background: #fff;
+    }
+    /* Status bar */
+    .status-bar-strip {
+      background: rgba(93,255,192,.05);
+      border-top: 1px solid rgba(93,255,192,.1);
+      padding: 5px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .status-bar-strip span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: .4px;
+    }
+    /* ── Reference nav tabs ── */
+    .ref-tabs .nav-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      border-radius: 7px;
+      padding: 6px 14px;
+      margin-right: 4px;
+    }
+    .ref-tabs .nav-link.active, .ref-tabs .nav-link:hover {
+      background: rgba(93,255,192,.08);
+      border-color: rgba(93,255,192,.2);
+      color: var(--accent);
+    }
+    /* ── Cheat sheet table ── */
+    .cheat-table {
+      background: var(--panel);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .cheat-table table {
+      margin-bottom: 0;
+      color: var(--text);
+    }
+    .cheat-table thead th {
+      background: rgba(255,255,255,.03);
+      border-color: var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      padding: 10px 14px;
+    }
+    .cheat-table tbody td {
+      border-color: var(--border);
+      padding: 9px 14px;
+      font-size: 13px;
+    }
+    .cheat-table tbody tr:hover td {
+      background: rgba(93,255,192,.04);
+    }
+    /* ── Quick quiz form ── */
+    .quiz-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .quiz-card label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .quiz-card .form-check-label {
+      font-size: 13.5px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .form-check-input:checked {
+      background-color: var(--accent);
+      border-color: var(--accent);
+    }
+    .quiz-submit-btn {
+      background: var(--accent2) !important;
+      border: none !important;
+      color: #fff !important;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 22px;
+      border-radius: 8px;
+    }
+    /* ── Footer ── */
+    .footer-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    .footer-strip p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+ 
+    .footer-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .footer-link:hover { color: var(--accent2); }
+    /* ── Accordion ── */
+    .accordion-custom .accordion-button {
+      background: var(--panel);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .accordion-custom .accordion-button:not(.collapsed) {
+      background: rgba(93,255,192,.06);
+      color: var(--accent);
+    }
+    .accordion-custom .accordion-body {
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+    .accordion-custom .accordion-item {
+      background: var(--panel);
+      border: 1px solid var(--border) !important;
+      border-radius: 10px !important;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .accordion-custom .accordion-button::after {
+      filter: invert(1);
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  </style>
+</head>
+<body>
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container-fluid px-3 px-md-4">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+      <span class="logo-dot"></span>
+      DevLearn
+    </a>
+    <!-- Toggler for mobile -->
+    <button class="navbar-toggler border-0" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navContent"
+            aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-list text-light fs-5"></i>
+    </button>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navContent">
+      <!-- Breadcrumb (center on desktop) -->
+      <div class="mx-auto d-none d-md-flex align-items-center gap-2 breadcrumb-custom">
+        <i class="bi bi-code-slash"></i>
+        HTML /
+        <span class="active">Lesson 01</span>
+        / Basics
+      </div>
+      <!-- Right side -->
+      <div class="d-flex align-items-center gap-3 ms-auto mt-2 mt-lg-0">
+        <span class="badge badge-version">
+          <i class="bi bi-tag-fill me-1"></i>v1.0
+        </span>
+        <button class="btn btn-sm d-flex align-items-center gap-2"
+                style="background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2);font-size:12px;border-radius:8px;">
+          <i class="bi bi-journal-bookmark-fill"></i>
+          <span class="d-none d-sm-inline">Docs</span>
+        </button>
+        <button class="btn btn-sm d-flex align-items-center gap-2"
+                style="background:rgba(93,255,192,.08);color:var(--accent);border:1px solid rgba(93,255,192,.2);font-size:12px;border-radius:8px;">
+          <i class="bi bi-person-circle"></i>
+          <span class="d-none d-sm-inline">Login</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- ══════════════════════════════════════════════
+     HERO STRIP
+══════════════════════════════════════════════ -->
+<div class="hero-strip">
+  <div class="container-fluid px-3 px-md-4">
+    <div class="row align-items-center g-3">
+      <div class="col-12 col-md-8 col-xl-6">
+        <span class="lesson-badge"><i class="bi bi-mortarboard-fill me-1"></i>Lesson 01 — Foundations</span>
+        <h1 class="mb-1">HTML Basics</h1>
+        <p>HTML is the skeleton of every webpage. It uses <strong style="color:var(--text)">tags</strong> to wrap content and give it meaning. Edit the live playground to see your changes instantly.</p></div>
+      <div class="col-12 col-md-4 col-xl-6">
+        <!-- Quick stat cards -->
+        <div class="row g-2">
+          <div class="col-4">
+            <div class="text-center p-2" style="background:var(--panel);border:1px solid var(--border);border-radius:10px;">
+              <div style="font-size:20px;font-weight:800;color:var(--accent)">3</div>
+              <div style="font-size:10px;color:var(--muted);">Sections</div>
+            </div></div>
+          <div class="col-4">
+            <div class="text-center p-2" style="background:var(--panel);border:1px solid var(--border);border-radius:10px;">
+              <div style="font-size:20px;font-weight:800;color:var(--accent2)">5</div>
+              <div style="font-size:10px;color:var(--muted);">Exercises</div>
+            </div></div>
+          <div class="col-4">
+            <div class="text-center p-2" style="background:var(--panel);border:1px solid var(--border);border-radius:10px;">
+              <div style="font-size:20px;font-weight:800;color:var(--accent3)">~15m</div>
+              <div style="font-size:10px;color:var(--muted);">Duration</div>
+            </div></div></div></div></div>
+  <!-- Progress -->
+    <div class="row mt-3">
+      <div class="col-12 col-md-6">
+        <div class="d-flex justify-content-between mb-1">
+          <span class="progress-label"><i class="bi bi-activity me-1"></i>Course Progress</span>
+          <span class="progress-label" style="color:var(--accent)">25%</span>
+        </div>
+        <div class="progress-custom">
+          <div class="progress-bar-custom"></div>
+        </div></div> </div></div></div>
+<!-- ══════════════════════════════════════════════
+     INFO CARDS ROW
+══════════════════════════════════════════════ -->
+<div class="py-3" style="background:var(--bg);border-bottom:1px solid var(--border);">
+  <div class="container-fluid px-3 px-md-4">
+    <div class="row g-3">
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="info-card card border-0">
+          <div class="card-body">
+            <div class="card-icon icon-green">
+              <i class="bi bi-braces"></i>
+            </div>
+            <div class="card-title">Document Structure</div>
+            <p class="card-text">Learn how <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, and <code>&lt;body&gt;</code> form the skeleton of every webpage.</p>
+          </div></div></div>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="info-card card border-0">
+          <div class="card-body">
+            <div class="card-icon icon-purple">
+              <i class="bi bi-type-h1"></i>
+            </div>
+            <div class="card-title">Headings &amp; Text</div>
+            <p class="card-text">Use <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> for headings and <code>&lt;p&gt;</code> for paragraphs to structure content.</p>
+          </div></div></div>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="info-card card border-0">
+          <div class="card-body">
+            <div class="card-icon icon-orange">
+              <i class="bi bi-link-45deg"></i>
+            </div>
+            <div class="card-title">Links &amp; Images</div>
+            <p class="card-text">The <code>&lt;a&gt;</code> tag creates hyperlinks and <code>&lt;img&gt;</code> embeds visuals into your page.</p>
+          </div></div></div></div></div></div>
+<!-- ══════════════════════════════════════════════
+     MAIN: TUTORIAL + PLAYGROUND
+══════════════════════════════════════════════ -->
+<div class="container-fluid px-0 main-wrap">
+  <div class="row g-0">
+    <!-- ── Tutorial column ── -->
+    <div class="col-12 col-lg-5 col-xl-4 tutorial-col">
+      <div class="tutorial-inner">
+        <!-- Tabs for tutorial sections -->
+        <ul class="nav ref-tabs mb-4" role="tablist">
+          <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-learn" type="button">
+              <i class="bi bi-book me-1"></i>Learn
+            </button></li>
+          <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-ref" type="button">
+              <i class="bi bi-table me-1"></i>Cheat Sheet
+            </button> </li>
+          <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-quiz" type="button">
+              <i class="bi bi-patch-question me-1"></i>Quiz
+            </button></li></ul>
+        <div class="tab-content">
+          <!-- ── Learn tab ── -->
+          <div class="tab-pane fade show active" id="tab-learn">
+            <!-- Accordion sections -->
+            <div class="accordion accordion-custom" id="lessonAccordion">
+              <!-- Section 01 -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button"
+                          data-bs-toggle="collapse" data-bs-target="#sec01">
+                    <span class="section-num me-2">01</span>
+                    Document Structure
+                  </button> </h2>
+                <div id="sec01" class="accordion-collapse collapse show" data-bs-parent="#lessonAccordion">
+                  <div class="accordion-body">
+                    <p class="section-body mb-3">Every HTML file starts with a doctype declaration and wraps content in
+                    <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, and <code>&lt;body&gt;</code> tags.</p>
+                    <div class="code-block">
+                      <div class="code-block-header">
+                        <div class="mac-dots">
+                          <div class="mac-dot" style="background:#ff5f57"></div>
+                          <div class="mac-dot" style="background:#febc2e"></div>
+                          <div class="mac-dot" style="background:#28c840"></div> </div>
+                        <span class="code-block-lang">html</span>
+                      </div>
+                      <pre><span class="comment">&lt;!-- Basic skeleton --&gt;</span>
+<span class="tag">&lt;!DOCTYPE</span> <span class="attr">html</span><span class="tag">&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Page Title<span class="tag">&lt;/title&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="comment">&lt;!-- content here --&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre>
+                    </div></div></div></div>
+              <!-- Section 02 -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button"
+                          data-bs-toggle="collapse" data-bs-target="#sec02">
+                    <span class="section-num me-2">02</span>
+                    Headings &amp; Paragraphs
+                  </button></h2>
+                <div id="sec02" class="accordion-collapse collapse" data-bs-parent="#lessonAccordion">
+                  <div class="accordion-body">
+                    <p class="section-body mb-3">Use <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> for headings (h1 = largest) and
+                    <code>&lt;p&gt;</code> for body text.</p>
+                    <div class="code-block">
+                      <div class="code-block-header">
+                        <div class="mac-dots">
+                          <div class="mac-dot" style="background:#ff5f57"></div>
+                          <div class="mac-dot" style="background:#febc2e"></div>
+                          <div class="mac-dot" style="background:#28c840"></div>
+                        </div>
+                        <span class="code-block-lang">html</span></div>
+                      <pre><span class="tag">&lt;h1&gt;</span>Main Heading<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h2&gt;</span>Sub Heading<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;p&gt;</span>A paragraph of text.<span class="tag">&lt;/p&gt;</span></pre>
+                    </div></div></div></div>
+              <!-- Section 03 -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button"
+                          data-bs-toggle="collapse" data-bs-target="#sec03">
+                    <span class="section-num me-2">03</span>
+                    Links &amp; Images
+                  </button></h2>
+                <div id="sec03" class="accordion-collapse collapse" data-bs-parent="#lessonAccordion">
+                  <div class="accordion-body">
+                    <p class="section-body mb-3">The <code>&lt;a&gt;</code> tag creates hyperlinks using the <code>href</code> attribute.
+                    The <code>&lt;img&gt;</code> tag embeds images with <code>src</code> and <code>alt</code>.</p>
+                    <div class="code-block">
+                      <div class="code-block-header">
+                        <div class="mac-dots">
+                          <div class="mac-dot" style="background:#ff5f57"></div>
+                          <div class="mac-dot" style="background:#febc2e"></div>
+                          <div class="mac-dot" style="background:#28c840"></div>
+                        </div>
+                        <span class="code-block-lang">html</span>
+                      </div>
+                      <pre><span class="tag">&lt;a</span> <span class="attr">href=</span><span class="string">"https://example.com"</span><span class="tag">&gt;</span>
+  Visit Example
+<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src=</span><span class="string">"photo.jpg"</span>
+     <span class="attr">alt=</span><span class="string">"Description"</span><span class="tag">&gt;</span></pre>
+                    </div></div></div> </div>
+            </div><!-- /accordion -->
+            <!-- Tip callout -->
+            <div class="tip-callout mt-4">
+              <div class="d-flex gap-3">
+                <span style="font-size:18px;flex-shrink:0;">💡</span>
+                <p>Try modifying the code in the editor — change a heading, add a new paragraph, or swap a color. Press <strong style="color:#fff">Run Code</strong> or hit <kbd style="background:rgba(255,255,255,.1);color:var(--accent);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-family:JetBrains Mono,monospace;font-size:11px;">Ctrl+Enter</kbd> to preview.</p>
+              </div> </div>
+          </div><!-- /tab-pane learn -->
+          <!-- ── Cheat Sheet tab ── -->
+          <div class="tab-pane fade" id="tab-ref">
+            <div class="cheat-table">
+              <table class="table table-sm table-borderless mb-0">
+                <thead><tr>
+                    <th><i class="bi bi-tag me-1"></i>Tag</th>
+                    <th>Purpose</th>
+                    <th>Example</th>
+                  </tr></thead><tbody>
+                  <tr>
+                    <td><code>&lt;h1&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">Main heading</td>
+                    <td><code style="color:var(--accent3);">h1..h6</code></td></tr>
+                  <tr>
+                    <td><code>&lt;p&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">Paragraph</td>
+                    <td><code style="color:var(--accent3);">&lt;p&gt;text&lt;/p&gt;</code></td> </tr>
+                  <tr>
+                    <td><code>&lt;a&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">Hyperlink</td>
+                    <td><code style="color:var(--accent3);">href=""</code></td></tr>
+                  <tr>
+                    <td><code>&lt;img&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">Image</td>
+                    <td><code style="color:var(--accent3);">src alt</code></td></tr>
+                  <tr>
+                    <td><code>&lt;ul&gt; &lt;li&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">List</td>
+                    <td><code style="color:var(--accent3);">ul/ol</code></td></tr>
+                  <tr>
+                    <td><code>&lt;div&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">Container</td>
+                    <td><code style="color:var(--accent3);">block</code></td></tr>
+                  <tr>
+                    <td><code>&lt;span&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">Inline wrap</td>
+                    <td><code style="color:var(--accent3);">inline</code></td></tr>
+                  <tr>
+                    <td><code>&lt;strong&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">Bold text</td>
+                    <td><code style="color:var(--accent3);">&lt;strong&gt;</code></td></tr>
+                  <tr>
+                    <td><code>&lt;em&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">Italic text</td>
+                    <td><code style="color:var(--accent3);">&lt;em&gt;</code></td></tr>
+                  <tr>
+                    <td><code>&lt;form&gt;</code></td>
+                    <td style="color:var(--muted);font-size:13px;">Input form</td>
+                    <td><code style="color:var(--accent3);">action method</code></td>
+                  </tr></tbody></table></div></div>
+          <!-- ── Quiz tab ── -->
+          <div class="tab-pane fade" id="tab-quiz">
+            <div class="quiz-card">
+              <h6 class="mb-4" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.5px;text-transform:uppercase;">
+                <i class="bi bi-patch-question-fill me-2"></i>Quick Quiz
+              </h6>
+              <!-- Q1 -->
+              <div class="mb-4">
+                <label>1. Which tag defines the largest heading?</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="q1" id="q1a">
+                  <label class="form-check-label" for="q1a"><code>&lt;h6&gt;</code></label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="q1" id="q1b">
+                  <label class="form-check-label" for="q1b"><code>&lt;h1&gt;</code> ✓</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="q1" id="q1c">
+                  <label class="form-check-label" for="q1c"><code>&lt;header&gt;</code></label>
+                </div>
+              </div>
+              <!-- Q2 -->
+              <div class="mb-4">
+                <label>2. What attribute does <code>&lt;a&gt;</code> use for links?</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="q2" id="q2a">
+                  <label class="form-check-label" for="q2a"><code>src</code></label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="q2" id="q2b">
+                  <label class="form-check-label" for="q2b"><code>href</code> ✓</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="q2" id="q2c">
+                  <label class="form-check-label" for="q2c"><code>link</code></label>
+                </div>
+              </div>
+              <!-- Feedback area -->
+              <div id="quiz-feedback" class="d-none mb-3 p-3" style="background:rgba(93,255,192,.08);border:1px solid rgba(93,255,192,.2);border-radius:8px;font-size:13px;color:var(--accent);"></div>
+              <button class="btn quiz-submit-btn" onclick="submitQuiz()">
+                <i class="bi bi-check2-circle me-2"></i>Check Answers
+              </button></div></div>
+ </div><!-- /tab-content --></div>
+</div><!-- /tutorial col -->
+    <!-- ── Playground column ── -->
+    <div class="col-12 col-lg-7 col-xl-8 playground-col">
+      <div class="playground-inner">
+        <!-- Editor bar -->
+        <div class="panel-bar">
+          <div class="panel-title">
+            <div class="status-dot dot-orange"></div>
+            Editor</div>
+          <div class="d-flex align-items-center gap-2">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);">
+              <i class="bi bi-keyboard me-1"></i><span class="d-none d-sm-inline">Ctrl+Enter to run</span>
+            </span>
+            <button class="run-btn" onclick="runCode()" id="run-btn">
+              <i class="bi bi-play-fill"></i>
+              <span>Run Code</span>
+            </button></div></div>
+        <!-- Code textarea -->
+        <div class="editor-wrap">
+          <div class="line-numbers" id="line-numbers">1</div>
+          <textarea id="code-editor" spellcheck="false" autocorrect="off" autocapitalize="off">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;My Page&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      font-family: Georgia, serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #222;
+    }
+    h1 { color: #7c3aed; }
+    a  { color: #059669; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello, World! 👋&lt;/h1&gt;
+  &lt;h2&gt;About HTML&lt;/h2&gt;
+  &lt;p&gt;
+    HTML is the &lt;strong&gt;building block&lt;/strong&gt; of
+    every webpage. Edit this code and click Run!
+  &lt;/p&gt;
+  &lt;h3&gt;Useful Links&lt;/h3&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#"&gt;HTML Reference&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;CSS Guide&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;JavaScript Basics&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        </div>
+        <!-- Output bar -->
+        <div class="panel-bar">
+          <div class="panel-title">
+            <div class="status-dot dot-green"></div>
+            Output Preview
+          </div>
+          <span id="status-msg" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);">Ready</span>
+        </div>
+        <!-- Output iframe -->
+        <div class="output-wrap">
+          <iframe id="output" title="Code output preview"></iframe>
+        </div>
+        <!-- Status strip -->
+        <div class="status-bar-strip">
+          <span><i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>Live Preview Active</span>
+          <span><i class="bi bi-device-laptop me-1"></i><span id="viewport-label">Desktop</span></span>
+        </div></div>
+    </div><!-- /playground col -->
+  </div><!-- /row -->
+</div><!-- /container-fluid -->
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer class="footer-strip">
+  <div class="container-fluid px-3 px-md-4">
+    <div class="row align-items-center g-2">
+      <div class="col-12 col-md-6">
+        <p><i class="bi bi-code-slash me-1" style="color:var(--accent);"></i>
+          DevLearn — HTML Basics Playground &nbsp;·&nbsp; <span style="color:var(--accent);">Lesson 01 of 12</span>
+        </p></div>
+      <div class="col-12 col-md-6 text-md-end">
+        <a href="#" class="footer-link me-3"><i class="bi bi-arrow-left me-1"></i>Prev</a>
+        <a href="#" class="footer-link me-3"><i class="bi bi-house-fill me-1"></i>Home</a>
+        <a href="#" class="footer-link"><i class="bi bi-arrow-right me-1"></i>Next Lesson</a>
+      </div></div><div></footer>
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  /* ── Run code ── */
+  function runCode() {
+    const code = document.getElementById('code-editor').value;
+    const iframe = document.getElementById('output');
+    const msg  = document.getElementById('status-msg');
+    const btn  = document.getElementById('run-btn');
+    iframe.srcdoc = code;
+    btn.innerHTML = '<i class="bi bi-check2"></i><span> Ran!</span>';
+    btn.style.background = '#a78bfa';
+    msg.textContent = 'Last run: ' + new Date().toLocaleTimeString();
+    setTimeout(() => {
+      btn.innerHTML = '<i class="bi bi-play-fill"></i><span>Run Code</span>';
+      btn.style.background = 'var(--accent)';
+    }, 1500);
+  }
+  /* ── Line numbers ── */
+  function updateLineNumbers() {
+    const ta   = document.getElementById('code-editor');
+    const ln   = document.getElementById('line-numbers');
+    const count = ta.value.split('\n').length;
+    ln.innerHTML = Array.from({length: count}, (_, i) => i + 1).join('<br>');
+    ln.scrollTop = ta.scrollTop;
+  }
+  const editor = document.getElementById('code-editor');
+  editor.addEventListener('input',  updateLineNumbers);
+  editor.addEventListener('scroll', () => {
+    document.getElementById('line-numbers').scrollTop = editor.scrollTop;
+  });
+  /* ── Tab key ── */
+  editor.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const s = editor.selectionStart;
+      editor.value = editor.value.slice(0, s) + '  ' + editor.value.slice(editor.selectionEnd);
+      editor.selectionStart = editor.selectionEnd = s + 2;
+      updateLineNumbers();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') runCode();
+  });
+  /* ── Quiz logic ── */
+  function submitQuiz() {
+    const q1 = document.querySelector('input[name="q1"]:checked');
+    const q2 = document.querySelector('input[name="q2"]:checked');
+    const fb = document.getElementById('quiz-feedback');
+    if (!q1 || !q2) {
+      fb.className = 'mb-3 p-3';
+      fb.style.background = 'rgba(251,146,60,.08)';
+      fb.style.border = '1px solid rgba(251,146,60,.2)';
+      fb.style.color = 'var(--accent3)';
+      fb.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>Please answer all questions.';
+      return;
+    }
+    const score = (q1.id === 'q1b' ? 1 : 0) + (q2.id === 'q2b' ? 1 : 0);
+    fb.className = 'mb-3 p-3';
+    if (score === 2) {
+      fb.style.background = 'rgba(93,255,192,.08)';
+      fb.style.border = '1px solid rgba(93,255,192,.2)';
+      fb.style.color = 'var(--accent)';
+      fb.innerHTML = '<i class="bi bi-trophy-fill me-2"></i>Perfect score! 2/2 — Great work! 🎉';
+    } else {
+      fb.style.background = 'rgba(251,146,60,.08)';
+      fb.style.border = '1px solid rgba(251,146,60,.2)';
+      fb.style.color = 'var(--accent3)';
+      fb.innerHTML = `<i class="bi bi-arrow-repeat me-2"></i>Score: ${score}/2 — Review the sections and try again!`;
+    }
+  }
+  /* ── Viewport label ── */
+  function updateViewport() {
+    const w = window.innerWidth;
+    const el = document.getElementById('viewport-label');
+    if (!el) return;
+    el.textContent = w < 576 ? 'Mobile' : w < 992 ? 'Tablet' : 'Desktop';
+  }
+  window.addEventListener('resize', updateViewport);
+  /* ── Init ── */
+  updateLineNumbers();
+  updateViewport();
+  runCode();
+</script></body>
+</html>
